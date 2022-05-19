@@ -5,6 +5,7 @@ import {} from "@mui/material";
 import makeStyles from '@mui/styles/makeStyles'
 import MainTableComponent from "./Components/MainTableComponent";
 import StartedSelectionComponent from "./Components/StartedSelectionComponent";
+import AuthComponent from "./Components/AuthComponent";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles();
+    const tok = localStorage.getItem('token')
     return (<>
         <div>
             <AppBar position="fixed">
@@ -37,7 +39,7 @@ function App() {
         <div>
             <Toolbar/>
             <main>
-                <StartedSelectionComponent/>
+                <AuthComponent/>
             </main>
         </div>
     </>);
