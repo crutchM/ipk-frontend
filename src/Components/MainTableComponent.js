@@ -22,7 +22,7 @@ export default class MainTableComponent extends Component {
     constructor(props) {
         super(props);
         this.answer = 1
-
+        console.log(props.stat)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -37,7 +37,6 @@ export default class MainTableComponent extends Component {
 
 
     render() {
-
         const questions = [new Question('q1'), new Question('q2'), new Question('q3')]
         return (
             <Box>
@@ -63,12 +62,13 @@ export default class MainTableComponent extends Component {
                                                         labelId="demo-simple-select-label"
                                                         id="demo-simple-select"
                                                         label="Answer"
-                                                        onchange={this.handleChange}
+                                                        onChange={this.handleChange}
                                                         style={{
                                                             width: 100,
                                                             height: 58,
                                                             display: 'inline-block'
                                                         }}
+                                                        defaultValue={""}
                                                     >
                                                         {item.answers.map(it => (
                                                             <MenuItem value={it}>
