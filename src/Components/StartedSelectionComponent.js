@@ -127,6 +127,18 @@ export default class StartedSelectionComponent extends Component {
             localStorage.setItem('teacher', this.state.teacher)
             localStorage.setItem('expert', this.state.expert)
             localStorage.setItem('employment', this.state.employment)
+            fetch('http://localhost:8081/api/user/',{
+                headers: new Headers({
+                    Authorization:"Bearer " + localStorage.getItem('token')
+                })
+            })
+                .then((result) => result.json())
+                .then((data) => {
+                    localStorage.setItem('name', data.user.fullname)
+                    localStorage.setItem('chair', data.user.chair)
+                    localStorage.setItem('id', data.user.id)
+                    localStorage.setItem('post', data.user.post)
+                })
             return (<Navigate to="/test" replace={true}/>)
         }
         return (

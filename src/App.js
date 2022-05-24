@@ -23,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
 window.addEventListener("beforeunload", (e)=>{
     e.preventDefault()
     localStorage.setItem('token', null)
+    localStorage.setItem('name', null)
+    localStorage.setItem('chair', null)
+    localStorage.setItem('id', null)
     localStorage.setItem('post', null)
+    localStorage.setItem('teacher', null)
+    localStorage.setItem('expert', null)
+    localStorage.setItem('employment', null)
+
 })
 
 function App() {

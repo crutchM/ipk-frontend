@@ -84,7 +84,7 @@ export default class AuthComponent extends Component {
             headers: {'Content-type': 'Application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             body: JSON.stringify({'username': this.state.login, 'password': this.state.password})
         }
-
+        let token = null
         fetch("http://localhost:8081/auth/sign-in", requestOptions)
             .then((data) => data.json())
             .then((result) => {
@@ -92,9 +92,12 @@ export default class AuthComponent extends Component {
                 this.setState({
                     isLoaded: true,
                 })
+                token = result.token
                 this.storage.setData('token', result.token)
                 this.setState({authorized: true})
             })
+
+
 
     }
 

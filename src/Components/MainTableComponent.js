@@ -31,7 +31,7 @@ export default class MainTableComponent extends Component {
 
     }
 
-    handleChange(event: SelectChangeEvent) {
+    handleChange(event) {
         this.answer = event.target.value
     }
 
