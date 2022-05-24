@@ -8,6 +8,7 @@ import StartedSelectionComponent from "./Components/StartedSelectionComponent";
 import {Routes, Route, Link} from 'react-router-dom'
 import MainTableComponent from "./Components/MainTableComponent";
 import {useState} from "react";
+import TestComponent from "./Components/TestComponent";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,9 +45,10 @@ function App() {
             <div>
                 <Toolbar/>
                 <Routes>
+                    <Route path="/test" element={<TestComponent/>}/>
                     <Route path="/" element={<AuthComponent/>}></Route>
                     <Route path="/sel" element={<StartedSelectionComponent/>}></Route>
-                    <Route path="/test" element={<MainTableComponent/>}/>
+
                 </Routes>
             </div>
         </>);
