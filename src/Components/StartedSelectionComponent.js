@@ -10,7 +10,7 @@ import {Navigate} from "react-router-dom";
 export default class StartedSelectionComponent extends Component {
     constructor(props) {
         super(props);
-        this.stat = new Stat(0,0,0,0,null,)
+        this.stat = new Stat(0, 0, 0, 0, null,)
         this.state = {
             teachers: [],
             employments: [],
@@ -30,38 +30,44 @@ export default class StartedSelectionComponent extends Component {
 
 
     handleSubmitTeacher(event) {
-        this.setState(state=>({
+        this.setState(state => ({
             filledFields: state.filledFields + 1,
             teacher: event.target.value
         }))
         this.renderTest()
     }
+
     handleSubmitExpert(event) {
-        this.setState(state=>({
+        this.setState(state => ({
             filledFields: state.filledFields + 1,
             expert: event.target.value
         }))
         this.renderTest()
     }
 
-    // componentDidMount() {
-    //
-    //     fetch('http://localhost:8081/api/user/')
-    //         .then((result) => result.json())
-    //         .then(
-    //             (data)=>{
-    //                 localStorage.setItem('post', data.user.post)
-    //             }
-    //         )
-    // }
-
-    getAllFields(){
-
-        fetch("http://localhost:8081/api/user/teachers",  {
+    componentDidMount() {
+        fetch('http://localhost:8081/api/user/',{
             headers: new Headers({
                 Authorization:"Bearer " + localStorage.getItem('token')
+            })
+        })
+            .then((result) => result.json())
+            .then((data) => {
+                localStorage.setItem('name', data.user.fullname)
+                localStorage.setItem('chair', data.user.chair)
+                localStorage.setItem('id', data.user.id)
+                localStorage.setItem('post', data.user.post)
+            })
+        this.getAllFields()
+    }
+
+    getAllFields() {
+
+        fetch("http://localhost:8081/api/user/teachers", {
+            headers: new Headers({
+                Authorization: "Bearer " + localStorage.getItem('token')
             }),
-            credentials:"include"
+            credentials: "include"
         })
             .then((data) => data.json())
             .then((result) => {
@@ -72,9 +78,9 @@ export default class StartedSelectionComponent extends Component {
             })
         fetch("http://localhost:8081/api/user/experts", {
             headers: new Headers({
-                Authorization:"Bearer " + localStorage.getItem('token')
+                Authorization: "Bearer " + localStorage.getItem('token')
             }),
-            credentials:"include"
+            credentials: "include"
         })
             .then((data) => data.json())
             .then((result) => {
@@ -82,11 +88,11 @@ export default class StartedSelectionComponent extends Component {
                     experts: result.experts
                 })
             })
-        fetch("http://localhost:8081/api/user/employments",{
+        fetch("http://localhost:8081/api/user/employments", {
             headers: new Headers({
-                Authorization:"Bearer " + localStorage.getItem('token')
+                Authorization: "Bearer " + localStorage.getItem('token')
             }),
-            credentials:"include"
+            credentials: "include"
         })
             .then((data) => data.json())
             .then((result) => {
@@ -97,7 +103,7 @@ export default class StartedSelectionComponent extends Component {
     }
 
     handleSubmitEmployment(event) {
-        this.setState(state=>({
+        this.setState(state => ({
             filledFields: state.filledFields + 1,
             employment: event.target.value
         }))
@@ -105,8 +111,8 @@ export default class StartedSelectionComponent extends Component {
         this.renderTest()
     }
 
-    renderTest(){
-        if(this.state.filledFields === 3) {
+    renderTest() {
+        if (this.state.filledFields === 3) {
             this.stat.userId = this.state.teacher
             this.stat.expert = this.state.expert
             this.stat.employment = this.state.employment
@@ -115,30 +121,17 @@ export default class StartedSelectionComponent extends Component {
     }
 
     render() {
-        if(localStorage.getItem('token') === "null"){
+        if (localStorage.getItem('token') === "null") {
             return (<Navigate to="/" replace/>)
         }
-        this.getAllFields()
-        if(this.state.filledFields === 3) {
+        if (this.state.filledFields === 3) {
             this.stat.userId = this.state.teacher
             this.stat.expert = this.state.expert
             this.stat.employment = this.state.employment
-           //console.log(this.stat)
+            //console.log(this.stat)
             localStorage.setItem('teacher', this.state.teacher)
             localStorage.setItem('expert', this.state.expert)
             localStorage.setItem('employment', this.state.employment)
-            fetch('http://localhost:8081/api/user/',{
-                headers: new Headers({
-                    Authorization:"Bearer " + localStorage.getItem('token')
-                })
-            })
-                .then((result) => result.json())
-                .then((data) => {
-                    localStorage.setItem('name', data.user.fullname)
-                    localStorage.setItem('chair', data.user.chair)
-                    localStorage.setItem('id', data.user.id)
-                    localStorage.setItem('post', data.user.post)
-                })
             return (<Navigate to="/test" replace={true}/>)
         }
         return (

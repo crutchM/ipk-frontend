@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-window.addEventListener("beforeunload", (e)=>{
-    e.preventDefault()
+window.addEventListener("unload", (e)=>{
+    //e.preventDefault()
     localStorage.setItem('token', null)
     localStorage.setItem('name', null)
     localStorage.setItem('chair', null)
