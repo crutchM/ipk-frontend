@@ -12,6 +12,7 @@ import {
     IconButton, Typography, Button
 } from "@mui/material";
 import {Navigate} from "react-router-dom";
+import AppBarComponent from "./HeaderComponent";
 
 export default class AuthComponent extends Component {
     constructor(props) {
@@ -111,6 +112,7 @@ export default class AuthComponent extends Component {
         } else {
             return (
                 <>
+                    <AppBarComponent post={5}/>
                     <Grid container spacing={7} style={{paddingTop: 100}} alignItems="center" justifyContent="center">
                         <Box textAlign='center' sx={{p: 2, border: '1px dashed grey'}}>
                             <Grid item>

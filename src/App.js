@@ -6,8 +6,6 @@ import makeStyles from '@mui/styles/makeStyles'
 import AuthComponent from "./Components/AuthComponent";
 import StartedSelectionComponent from "./Components/StartedSelectionComponent";
 import {Routes, Route, Link} from 'react-router-dom'
-import MainTableComponent from "./Components/MainTableComponent";
-import {useState} from "react";
 import TestComponent from "./Components/TestComponent";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,16 +36,17 @@ function App() {
     return (
         <>
             <div>
-                <AppBar position="fixed">
-                    <Container fixed>
-                        <Toolbar>
-                            <IconButton edge="start" color="inherit" aria-label="menu">
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography variant="h6" style={{flexGrow: 8}}>Material site</Typography>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
+                {/*<AppBar position="fixed">*/}
+                {/*    <Container fixed>*/}
+                {/*        <Toolbar>*/}
+                {/*            <IconButton edge="start" color="inherit" aria-label="menu">*/}
+                {/*                <MenuIcon/>*/}
+                {/*            </IconButton>*/}
+                {/*            <Typography variant="h6" style={{flexGrow: 8}}>Material site</Typography>*/}
+                {/*        </Toolbar>*/}
+                {/*    </Container>*/}
+                {/*</AppBar>*/}
+
             </div>
             <div>
                 <Toolbar/>

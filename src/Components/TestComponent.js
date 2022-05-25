@@ -1,4 +1,4 @@
-import {Component, useEffect} from "react";
+import React, {Component, useEffect} from "react";
 import {
     Button, FormControl,
     Grid,
@@ -15,6 +15,7 @@ import {
 import AuthComponent from "./AuthComponent";
 import StartedSelectionComponent from "./StartedSelectionComponent";
 import {Navigate} from "react-router-dom";
+import AppBarComponent from "./HeaderComponent";
 
 
 export default class TestComponent extends Component {
@@ -31,7 +32,8 @@ export default class TestComponent extends Component {
             results: [],
             questionsCount: 0,
             row: 0,
-            reqData: []
+            reqData: [],
+            sended: false
         }
 
         this.formRequest = this.formRequest.bind(this)
@@ -130,6 +132,9 @@ export default class TestComponent extends Component {
                     })
 
             })
+        this.setState({
+            sended: true
+        })
 
 
     }
@@ -139,8 +144,12 @@ export default class TestComponent extends Component {
         if (localStorage.getItem('token') === "null") {
             return (<Navigate to="/" replace/>)
         }
+        if(this.state.sended){
+            return (<Navigate to="/sel" replace/>)
+        }
         return (
             <>
+                <AppBarComponent post={Number(localStorage.getItem('post'))}/>
                 <TableContainer>
                     <Grid container spacing={5} alignItems="center" justifyContent="center"
                           style={{paddingTop: 20}}>
@@ -156,8 +165,8 @@ export default class TestComponent extends Component {
                                            }}
                                            textAlign='center'>
                                         <TableHead>
-                                            <TableRow style={{borderTopWidth: 1, borderStyle: 'solid'}}>
-                                                <TableCell> {item.name}</TableCell>
+                                            <TableRow  style={{borderTopWidth: 3, borderStyle: 'solid'}}>
+                                                <TableCell> {item.name + ' компонент'} </TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody style={{borderTopWidth: 1, borderStyle: 'solid'}}>
