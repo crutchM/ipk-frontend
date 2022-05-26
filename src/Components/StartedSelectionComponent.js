@@ -18,8 +18,22 @@ export default class StartedSelectionComponent extends Component {
             teacher: null,
             expert: null,
             employment: null,
-            filledFields: 0
+            filledFields: 0,
+            post: 0
         }
+        fetch('http://localhost:8081/api/user/', {
+            headers: new Headers({
+                Authorization: "Bearer " + localStorage.getItem('token')
+            })
+        })
+            .then((result) => result.json())
+            .then((data) => {
+                localStorage.setItem('name', data.user.fullname)
+                localStorage.setItem('chair', data.user.chair)
+                localStorage.setItem('id', data.user.id)
+                localStorage.setItem('post', data.user.post)
+                this.setState({post: Number(data.user.post)})
+            })
 
         this.handleSubmitTeacher = this.handleSubmitTeacher.bind(this)
         this.handleSubmitExpert = this.handleSubmitExpert.bind(this)
@@ -46,18 +60,7 @@ export default class StartedSelectionComponent extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8081/api/user/', {
-            headers: new Headers({
-                Authorization: "Bearer " + localStorage.getItem('token')
-            })
-        })
-            .then((result) => result.json())
-            .then((data) => {
-                localStorage.setItem('name', data.user.fullname)
-                localStorage.setItem('chair', data.user.chair)
-                localStorage.setItem('id', data.user.id)
-                localStorage.setItem('post', data.user.post)
-            })
+
         this.getAllFields()
     }
 
@@ -121,6 +124,8 @@ export default class StartedSelectionComponent extends Component {
     }
 
     render() {
+        const post =Number(localStorage.getItem('post'))
+        console.log(this.state.post)
         if (localStorage.getItem('token') === "null") {
             return (<Navigate to="/" replace/>)
         }
@@ -134,9 +139,10 @@ export default class StartedSelectionComponent extends Component {
             localStorage.setItem('employment', this.state.employment)
             return (<Navigate to="/test" replace={true}/>)
         }
+
         return (
             <>
-                <AppBarComponent post={Number(localStorage.getItem('post'))}/>
+                <AppBarComponent/>
                 <Grid container spacing={5} alignItems="center" justifyContent="center"
                       style={{paddingTop: 100}}>
                     <Grid item>

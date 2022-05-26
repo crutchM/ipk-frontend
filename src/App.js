@@ -7,6 +7,10 @@ import AuthComponent from "./Components/AuthComponent";
 import StartedSelectionComponent from "./Components/StartedSelectionComponent";
 import {Routes, Route, Link} from 'react-router-dom'
 import TestComponent from "./Components/TestComponent";
+import ChairStatComponent from "./Components/stat/ChairStatComponent";
+import IndividualStatComponent from "./Components/stat/IndividualStatComponent";
+import AppBarComponent from "./Components/HeaderComponent";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +50,6 @@ function App() {
                 {/*        </Toolbar>*/}
                 {/*    </Container>*/}
                 {/*</AppBar>*/}
-
             </div>
             <div>
                 <Toolbar/>
@@ -54,6 +57,8 @@ function App() {
                     <Route path="/test" element={<TestComponent/>}/>
                     <Route path="/" element={<AuthComponent/>}></Route>
                     <Route path="/sel" element={<StartedSelectionComponent/>}></Route>
+                    <Route path="/chair" element={<ChairStatComponent/>}/>
+                    <Route path="/individual" element={<IndividualStatComponent/>}/>
 
                 </Routes>
             </div>

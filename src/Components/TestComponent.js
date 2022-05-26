@@ -10,7 +10,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow, Paper, Typography
 } from "@mui/material";
 import AuthComponent from "./AuthComponent";
 import StartedSelectionComponent from "./StartedSelectionComponent";
@@ -144,77 +144,92 @@ export default class TestComponent extends Component {
         if (localStorage.getItem('token') === "null") {
             return (<Navigate to="/" replace/>)
         }
-        if(this.state.sended){
+        if (this.state.sended) {
             return (<Navigate to="/sel" replace/>)
         }
         return (
             <>
                 <AppBarComponent post={Number(localStorage.getItem('post'))}/>
-                <TableContainer>
-                    <Grid container spacing={5} alignItems="center" justifyContent="center"
-                          style={{paddingTop: 20}}>
-                        {this.state.test.map(item => (
-                            <>
-                                <Grid item xs={8} style={{display: 'flex', justifyContent: 'center'}}>
-                                    <Table sx={{minWidth: 400}}
-                                           style={{
-                                               maxWidth: 1000,
-                                               borderTopWidth: 1,
-                                               borderStyle: 'solid',
-                                               alignSelf: 'center'
-                                           }}
-                                           textAlign='center'>
-                                        <TableHead>
-                                            <TableRow  style={{borderTopWidth: 3, borderStyle: 'solid'}}>
-                                                <TableCell> {item.name + ' компонент'} </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody style={{borderTopWidth: 1, borderStyle: 'solid'}}>
-                                            {item.questions.map(ques => (
-                                                <>
-                                                    <TableRow style={{borderTopWidth: 1, borderStyle: 'solid'}}>
-                                                        <TableCell>{ques.number}</TableCell>
-                                                        <TableCell>{ques.text}</TableCell>
-                                                        <TableCell>
-                                                            <FormControl fullWidth>
-                                                                <InputLabel
-                                                                    id="demo-simple-select-label">ответ</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    label="ответ"
-                                                                    onChange={(e) => {
-                                                                        this.handleOnChange(e, {
-                                                                            block: item.id,
-                                                                            question: ques.id,
-                                                                            answer: 0
-                                                                        })
-                                                                    }}
-                                                                    style={{width: 200}}
-                                                                    defaultValue={""}
-                                                                >
-                                                                    {this.state.answers.map(ans => (
-                                                                        <MenuItem
-                                                                            value={ans.answer}>{ans.text}</MenuItem>
-                                                                    ))}
-                                                                </Select>
-                                                            </FormControl>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                </>
-                                            ))}
-                                        </TableBody>
-
-                                    </Table>
-                                </Grid>
-
-                            </>
-                        ))}
-                        <Grid item xs={8} textAlign='center'>
-                            <Button variant="contained" onClick={this.submitAnket}>Отправить форму</Button>
-                        </Grid>
+                <Grid container style={{display: 'flex', justifyContent: 'center'}}>
+                    <Grid item style={{alignSelf: 'center'}}>
+                        <Box>
+                            <Paper elevation={2}>
+                                <Typography>Преподаватель: Борченко Юлия Владимировна</Typography>
+                                <Typography>Эксперт:Зав кафедры</Typography>
+                                <Typography>Тип занятия:лекция</Typography>
+                            </Paper>
+                        </Box>
                     </Grid>
-                </TableContainer>
+                    <Grid item sx={{paddingTop: 5}}>
+                        <TableContainer>
+                            <Grid container spacing={5} alignItems="center" justifyContent="center"
+                            >
+                                {this.state.test.map(item => (
+                                    <>
+                                        <Grid item xs={8} style={{display: 'flex', justifyContent: 'center'}}>
+
+                                            <Table sx={{minWidth: 400}}
+                                                   style={{
+                                                       maxWidth: 1000,
+                                                       borderTopWidth: 1,
+                                                       borderStyle: 'solid',
+                                                       alignSelf: 'center'
+                                                   }}
+                                                   textAlign='center'>
+                                                    <TableHead>
+                                                        <TableRow style={{borderTopWidth: 3, borderStyle: 'solid'}}>
+                                                            <TableCell> {item.name + ' компонент'} </TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody style={{borderTopWidth: 1, borderStyle: 'solid'}}>
+                                                        {item.questions.map(ques => (
+                                                            <>
+                                                                <TableRow
+                                                                    style={{borderTopWidth: 1, borderStyle: 'solid'}}>
+                                                                    <TableCell>{ques.number}</TableCell>
+                                                                    <TableCell>{ques.text}</TableCell>
+                                                                    <TableCell>
+                                                                        <FormControl fullWidth>
+                                                                            <InputLabel
+                                                                                id="demo-simple-select-label">ответ</InputLabel>
+                                                                            <Select
+                                                                                labelId="demo-simple-select-label"
+                                                                                id="demo-simple-select"
+                                                                                label="ответ"
+                                                                                onChange={(e) => {
+                                                                                    this.handleOnChange(e, {
+                                                                                        block: item.id,
+                                                                                        question: ques.id,
+                                                                                        answer: 0
+                                                                                    })
+                                                                                }}
+                                                                                style={{width: 200}}
+                                                                                defaultValue={""}
+                                                                            >
+                                                                                {this.state.answers.map(ans => (
+                                                                                    <MenuItem
+                                                                                        value={ans.answer}>{ans.text}</MenuItem>
+                                                                                ))}
+                                                                            </Select>
+                                                                        </FormControl>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            </>
+                                                        ))}
+                                                    </TableBody>
+                                            </Table>
+
+                                        </Grid>
+
+                                    </>
+                                ))}
+                                <Grid item xs={8} textAlign='center'>
+                                    <Button variant="contained" onClick={this.submitAnket}>Отправить форму</Button>
+                                </Grid>
+                            </Grid>
+                        </TableContainer>
+                    </Grid>
+                </Grid>
             </>
         )
     }
