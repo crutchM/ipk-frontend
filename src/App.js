@@ -11,6 +11,7 @@ import ChairStatComponent from "./Components/stat/ChairStatComponent";
 import IndividualStatComponent from "./Components/stat/IndividualStatComponent";
 import AppBarComponent from "./Components/HeaderComponent";
 import React from "react";
+import StatComponent from "./Components/stat/StatComponent";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,7 +58,7 @@ function App() {
                     <Route path="/test" element={<TestComponent/>}/>
                     <Route path="/" element={<AuthComponent/>}></Route>
                     <Route path="/sel" element={<StartedSelectionComponent/>}></Route>
-                    <Route path="/chair" element={<ChairStatComponent/>}/>
+                    <Route path="/chair" element={<StatComponent/>}/>
                     <Route path="/individual" element={<IndividualStatComponent/>}/>
 
                 </Routes>

@@ -7,13 +7,17 @@ export default class ChairStatComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
+            results: []
         }
         this.load = this.load.bind(this)
-        this.load()
+
     }
 
     load() {
+
+    }
+
+    componentDidMount() {
         fetch('http://localhost:8081/api/stat/getStat', {
             method: 'POST',
             headers: new Headers({
@@ -23,20 +27,32 @@ export default class ChairStatComponent extends Component {
         })
             .then((data) => data.json())
             .then((result) => {
-                    this.setState({users: result})
-                    //console.log(this.state.users)
+                    //console.log(result)
+                    this.setState({
+                        result: result.results
+                    })
+                    //console.log(this.state.results)
                 }
-            )
+            ).catch((error) => {
+            console.log(error)
+        })
     }
 
     render() {
-        console.log(this.state.users)
-        console.log(this.state.users[0].blocks)
+        let ar = this.state.result
+        console.log(ar)
+        if (ar === undefined){
+            console.log("undef")
+        }
+        console.log(ar[5])
+        // this.state.result.map(item=>{console.log(item)})
         return (
             <>
                 <div>
                     <HeaderComponent>
                     </HeaderComponent>
+                </div>
+                <div>
                 </div>
                 {/*<div>*/}
                 {/*    <TableContainer>*/}
