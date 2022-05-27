@@ -7,11 +7,10 @@ import AuthComponent from "./Components/AuthComponent";
 import StartedSelectionComponent from "./Components/StartedSelectionComponent";
 import {Routes, Route, Link} from 'react-router-dom'
 import TestComponent from "./Components/TestComponent";
-import ChairStatComponent from "./Components/stat/ChairStatComponent";
 import IndividualStatComponent from "./Components/stat/IndividualStatComponent";
-import AppBarComponent from "./Components/HeaderComponent";
 import React from "react";
 import StatComponent from "./Components/stat/StatComponent";
+import TeacherComponent from "./Components/stat/TeacherComponent";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,12 +54,12 @@ function App() {
             <div>
                 <Toolbar/>
                 <Routes>
+                    <Route path="/individual" element={<TeacherComponent/>}/>
+
                     <Route path="/test" element={<TestComponent/>}/>
                     <Route path="/" element={<AuthComponent/>}></Route>
                     <Route path="/sel" element={<StartedSelectionComponent/>}></Route>
                     <Route path="/chair" element={<StatComponent/>}/>
-                    <Route path="/individual" element={<IndividualStatComponent/>}/>
-
                 </Routes>
             </div>
         </>);

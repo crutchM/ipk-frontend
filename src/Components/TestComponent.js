@@ -177,7 +177,7 @@ export default class TestComponent extends Component {
                                                    }}
                                                    textAlign='center'>
                                                     <TableHead>
-                                                        <TableRow style={{borderTopWidth: 3, borderStyle: 'solid'}}>
+                                                        <TableRow>
                                                             <TableCell> {item.name + ' компонент'} </TableCell>
                                                         </TableRow>
                                                     </TableHead>

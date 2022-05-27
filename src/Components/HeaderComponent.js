@@ -50,9 +50,7 @@ function adminHeader() {
                             <Typography variant="h6" style={{flexGrow: 8}}>Material site</Typography>
                             <ButtonGroup align="right" variant="contained" aria-label="outlined primary button group">
                                 <Button  variant="text"><Link to="/sel">home</Link></Button>
-                                <Button  variant="text"> <Link to="/individual">Individual</Link></Button>
                                 <Button  variant="text"> <Link to="/chair">Chair</Link></Button>
-                                <Button>Three</Button>
                             </ButtonGroup>
 
                         </Toolbar>
