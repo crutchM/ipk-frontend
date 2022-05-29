@@ -35,7 +35,7 @@ const StatComponent = (props) => {
                 seAr(data)
                 setBl(data[0].blocks)
             })
-    })
+    }, [])
     if (localStorage.getItem('token') === 'null'){
         return (<Navigate to='/' replace/>)
     }
