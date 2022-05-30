@@ -30,10 +30,14 @@ export default class TestComponent extends Component {
                 'text': 'средний'
             }, {answer: 4, 'text': 'выше среднего'}, {answer: 5, 'text': 'высокий'}],
             results: [],
+            filled: 0,
             questionsCount: 0,
             row: 0,
             reqData: [],
-            sended: false
+            sended: false,
+            teacher: "",
+            expert: "",
+            employment: ""
         }
 
         this.formRequest = this.formRequest.bind(this)
@@ -60,12 +64,17 @@ export default class TestComponent extends Component {
                 })
             }
         }
+        console.log("count: " + this.state.questionsCount)
     }
 
     handleOnChange(event, object) {
         object.answer = event.target.value
         //console.log(this.state.test)
         this.state.results.push(object)
+        this.setState({
+            filled: this.state.filled + 1
+        })
+        console.log('filled: ' + this.state.filled)
     }
 
     formRequest() {
@@ -94,48 +103,58 @@ export default class TestComponent extends Component {
         // if(this.state.results.length !== this.state.questionsCount){
         //     alert('вы заполнили не все поля')
         // } else
-        fetch('http://localhost:8081/api/test/sendStat', {
-            method: 'POST',
-            headers: new Headers({
-                Authorization: "Bearer " + localStorage.getItem('token')
-            }),
-            body: JSON.stringify(
-                {
-                    userId: localStorage.getItem('teacher'),
-                    postId: 1,
-                    chairId: Number(localStorage.getItem('chair')),
-                    employment: Number(localStorage.getItem('employment')),
-                    expert: Number(localStorage.getItem('expert'))
-                    // lessonDate: null,
-                    // anketDate: Date.now()
-                })
-        })
-            .then((data) => data.json())
-            .then((result) => {
-                // console.log(result.rowId)
-                this.formRequest()
-                console.log(this.state.reqData)
-                fetch("http://localhost:8081/api/test/sendResults", {
-                    method: 'POST',
-                    headers: new Headers({
-                        Authorization: "Bearer " + localStorage.getItem('token')
-                    }),
-                    body: JSON.stringify(
-                        {
-                            blocks: this.state.reqData,
-                            test: result.rowId
-                        })
-                })
-                    .then((respone) => respone.json())
-                    .then((status) => {
-                        console.log(status.status)
+        // if (this.state.filled !== 12) {
+        //     alert("вы заполнили не все поля")
+        //     return
+        // }
+        {
+            fetch('http://localhost:8081/api/test/sendStat', {
+                method: 'POST',
+                headers: new Headers({
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }),
+                body: JSON.stringify(
+                    {
+                        stat: {
+                            userId: localStorage.getItem('teacher'),
+                            postId: 1,
+                            chairId: Number(localStorage.getItem('chair')),
+                            employment: Number(localStorage.getItem('employment')),
+                            expert: Number(localStorage.getItem('expert')),
+
+                        },
+                        anketDate: Math.trunc(new Date() /1000),
+                        date: Number(localStorage.getItem('lessonDate'))
+                        // lessonDate: null,
+                        // anketDate: Date.now()
                     })
-
             })
-        this.setState({
-            sended: true
-        })
+                .then((data) => data.json())
+                .then((result) => {
+                    // console.log(result.rowId)
+                    this.formRequest()
+                    console.log(this.state.reqData)
+                    fetch("http://localhost:8081/api/test/sendResults", {
+                        method: 'POST',
+                        headers: new Headers({
+                            Authorization: "Bearer " + localStorage.getItem('token')
+                        }),
+                        body: JSON.stringify(
+                            {
+                                blocks: this.state.reqData,
+                                test: result.rowId
+                            })
+                    })
+                        .then((respone) => respone.json())
+                        .then((status) => {
+                            console.log(status.status)
+                        })
 
+                })
+            this.setState({
+                sended: true
+            })
+        }
 
     }
 
@@ -150,86 +169,103 @@ export default class TestComponent extends Component {
         return (
             <>
                 <AppBarComponent post={Number(localStorage.getItem('post'))}/>
-                <Grid container style={{display: 'flex', justifyContent: 'center'}}>
-                    <Grid item style={{alignSelf: 'center'}}>
-                        <Box>
-                            <Paper elevation={2}>
-                                <Typography>Преподаватель: Борченко Юлия Владимировна</Typography>
-                                <Typography>Эксперт:Зав кафедры</Typography>
-                                <Typography>Тип занятия:лекция</Typography>
-                            </Paper>
-                        </Box>
-                    </Grid>
-                    <Grid item sx={{paddingTop: 5}}>
-                        <TableContainer>
-                            <Grid container spacing={5} alignItems="center" justifyContent="center"
-                            >
-                                {this.state.test.map(item => (
-                                    <>
-                                        <Grid item xs={8} style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div style={{alignSelf: 'center'}}>
+                        <Grid container style={{display: 'flex', justifyContent: 'center'}}>
+                            <Grid item style={{alignSelf: 'center', display: 'flex', justifyContent: 'center'}}>
+                                <div style={{display:'block'}}>
+                                    <Box style={{alignSelf: 'center'}}>
+                                        <Paper elevation={2}>
+                                            <Typography>Преподаватель: {localStorage.getItem('teachS')}</Typography>
+                                            <Typography>Эксперт: {localStorage.getItem('expertS')}</Typography>
+                                            <Typography>Тип занятия: {localStorage.getItem('empS')}</Typography>
+                                        </Paper>
+                                    </Box>
+                                    <Box style={{alignSelf: 'center', paddingTop:10}}>
+                                        <Paper elevation={2} style={{maxWidth: 530}}>
+                                            <Typography>5 баллов - Высокий уровень выраженности показателя</Typography>
+                                            <Typography>4 балла - Уровень выраженности показателя выше среднего</Typography>
+                                            <Typography>3 балла - Уровень выраженности показателя средний</Typography>
+                                            <Typography>2 балла - Уровень выраженности показателя ниже среднего</Typography>
+                                            <Typography>1 балл - Низкий уровень выраженности показателя</Typography>
+                                        </Paper>
+                                    </Box>
+                                </div>
+                            </Grid>
+                            <Grid item sx={{paddingTop: 5}}>
+                                <TableContainer>
+                                    <Grid container spacing={5} alignItems="center" justifyContent="center"
+                                    >
+                                        {this.state.test.map(item => (
+                                            <>
+                                                <Grid item xs={8} style={{display: 'flex', justifyContent: 'center'}}>
 
-                                            <Table sx={{minWidth: 400}}
-                                                   style={{
-                                                       maxWidth: 1000,
-                                                       borderTopWidth: 1,
-                                                       borderStyle: 'solid',
-                                                       alignSelf: 'center'
-                                                   }}
-                                                   textAlign='center'>
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell> {item.name + ' компонент'} </TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    <TableBody style={{borderTopWidth: 1, borderStyle: 'solid'}}>
-                                                        {item.questions.map(ques => (
-                                                            <>
-                                                                <TableRow
-                                                                    style={{borderTopWidth: 1, borderStyle: 'solid'}}>
-                                                                    <TableCell>{ques.number}</TableCell>
-                                                                    <TableCell>{ques.text}</TableCell>
-                                                                    <TableCell>
-                                                                        <FormControl fullWidth>
-                                                                            <InputLabel
-                                                                                id="demo-simple-select-label">ответ</InputLabel>
-                                                                            <Select
-                                                                                labelId="demo-simple-select-label"
-                                                                                id="demo-simple-select"
-                                                                                label="ответ"
-                                                                                onChange={(e) => {
-                                                                                    this.handleOnChange(e, {
-                                                                                        block: item.id,
-                                                                                        question: ques.id,
-                                                                                        answer: 0
-                                                                                    })
-                                                                                }}
-                                                                                style={{width: 200}}
-                                                                                defaultValue={""}
-                                                                            >
-                                                                                {this.state.answers.map(ans => (
-                                                                                    <MenuItem
-                                                                                        value={ans.answer}>{ans.text}</MenuItem>
-                                                                                ))}
-                                                                            </Select>
-                                                                        </FormControl>
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            </>
-                                                        ))}
-                                                    </TableBody>
-                                            </Table>
+                                                    <Table sx={{minWidth: 400}}
+                                                           style={{
+                                                               maxWidth: 1000,
+                                                               borderTopWidth: 1,
+                                                               borderStyle: 'solid',
+                                                               alignSelf: 'center'
+                                                           }}
+                                                           textAlign='center'>
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell> {item.name + ' компонент'} </TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {item.questions.map(ques => (
+                                                                <>
+                                                                    <TableRow
+                                                                        style={{borderTopWidth: 2, borderStyle: 'solid'}}>
+                                                                        <TableCell>{ques.number}</TableCell>
+                                                                        <TableCell>{ques.text}</TableCell>
+                                                                        <TableCell>
+                                                                            <FormControl fullWidth>
+                                                                                <InputLabel
+                                                                                    id="demo-simple-select-label">ответ</InputLabel>
+                                                                                <Select
+                                                                                    labelId="demo-simple-select-label"
+                                                                                    id="demo-simple-select"
+                                                                                    label="ответ"
+                                                                                    onChange={(e) => {
+                                                                                        this.handleOnChange(e, {
+                                                                                            block: item.id,
+                                                                                            question: ques.id,
+                                                                                            answer: 0
+                                                                                        })
+                                                                                    }}
+                                                                                    style={{width: 100}}
+                                                                                    defaultValue={""}
+                                                                                >
+                                                                                    {this.state.answers.map(ans => (
+                                                                                        <MenuItem
+                                                                                            value={ans.answer}>{ans.answer}</MenuItem>
+                                                                                    ))}
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                </>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
 
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                        <Grid item xs={8} textAlign='center'>
+                                            <Button variant="contained" onClick={this.submitAnket}>Отправить форму</Button>
                                         </Grid>
 
-                                    </>
-                                ))}
-                                <Grid item xs={8} textAlign='center'>
-                                    <Button variant="contained" onClick={this.submitAnket}>Отправить форму</Button>
-                                </Grid>
+                                    </Grid>
+                                </TableContainer>
                             </Grid>
-                        </TableContainer>
-                    </Grid>
-                </Grid>
+                        </Grid>
+                    </div>
+                </div>
+
             </>
         )
     }

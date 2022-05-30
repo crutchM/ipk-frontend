@@ -44,13 +44,11 @@ function adminHeader() {
                 <AppBar position="fixed">
                     <Container fixed>
                         <Toolbar>
-                            <IconButton sx={{ mr: 2 }} edge="start" color="inherit" aria-label="menu">
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography variant="h6" style={{flexGrow: 8}}>Material site</Typography>
+                            <Typography variant="h6" style={{flexGrow: 8}}>Внутренняя система оценки качества образования</Typography>
                             <ButtonGroup align="right" variant="contained" aria-label="outlined primary button group">
-                                <Button  variant="text"><Link to="/sel">home</Link></Button>
-                                <Button  variant="text"> <Link to="/chair">Chair</Link></Button>
+                                <Button  variant="text" style={{margin: 2}}><Link to="/sel" style={{ textDecoration: 'none', color:'white'}}>Главная</Link></Button>
+                                <Button  variant="text" style={{margin: 2}}> <Link to="/chair" style={{textDecoration: 'none', color:'white'}}>Статистика</Link></Button>
+                                <Button  variant="text" style={{margin: 2}}> <Link to="/users" style={{textDecoration: 'none', color:'white'}}>Преподаватели</Link></Button>
                             </ButtonGroup>
 
                         </Toolbar>

@@ -7,10 +7,11 @@ import AuthComponent from "./Components/AuthComponent";
 import StartedSelectionComponent from "./Components/StartedSelectionComponent";
 import {Routes, Route, Link} from 'react-router-dom'
 import TestComponent from "./Components/TestComponent";
-import IndividualStatComponent from "./Components/stat/IndividualStatComponent";
 import React from "react";
 import StatComponent from "./Components/stat/StatComponent";
 import TeacherComponent from "./Components/stat/TeacherComponent";
+import ChairControllerComponent from "./Components/admin/ChairControllerComponent";
+import RegisterUserComponent from "./Components/admin/RegisterUserComponent";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 window.addEventListener("unload", (e)=>{
     //e.preventDefault()
+    localStorage.setItem('lessonDate', null)
     localStorage.setItem('token', null)
     localStorage.setItem('name', null)
     localStorage.setItem('chair', null)
@@ -60,6 +62,8 @@ function App() {
                     <Route path="/" element={<AuthComponent/>}></Route>
                     <Route path="/sel" element={<StartedSelectionComponent/>}></Route>
                     <Route path="/chair" element={<StatComponent/>}/>
+                    <Route path="/users" element={<ChairControllerComponent/>}/>
+                    <Route path="/reg" element={<RegisterUserComponent/>}/>
                 </Routes>
             </div>
         </>);

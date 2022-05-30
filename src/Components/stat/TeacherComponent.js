@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import HeaderComponent from "../HeaderComponent";
 import {
     Box,
@@ -19,9 +19,8 @@ const TeacherComponent = (props) => {
     const [results, setResults] = useState([])
     const [tmp, setTmp] = useState("")
     const location = useLocation()
-    const id = location.state.id
     useEffect(() => {
-        fetchData(id).then(data => {
+        fetchData(location.state.id).then(data => {
                 setResults(data)
                 setTmp(data[0].teacher.fullname)
             }
@@ -31,16 +30,21 @@ const TeacherComponent = (props) => {
         //     setTmp(data[0])
         // })
     }, [])
-
+    if(localStorage.getItem('token') === 'null'){
+        return <Navigate to='/' replace/>
+    } else if (Number(localStorage.getItem('post')) !== 1){
+        return <Navigate to='/sel' replace/>
+    }
     return (
         <>
+            <div >
+                <HeaderComponent/>
+            </div>
             {results.length === 0 && (
-                <div>loading....</div>)}
+                <div style={{display: 'flex', justifyContent: 'center'}}><Typography style={{alignSelf: 'center'}}>loading...</Typography></div>
+            )}
             {results.length !== 0 && (
                 <>
-                    <div>
-                        <HeaderComponent/>
-                    </div>
                     <div>
                         <Grid container style={{display: 'flex', justifyContent: 'center'}}>
                             <Grid item style={{alignSelf: 'center'}}>
@@ -54,8 +58,13 @@ const TeacherComponent = (props) => {
                             </Grid>
                         </Grid>
                         <Grid container>
-                            <Grid item>
-                                <TableContainer style={{marginLeft: 30}}>
+                            <Grid item >
+                                <TableContainer style={{marginLeft: 30, marginTop: 10}}>
+                                    <Paper elevation={2} style={{maxWidth:300, textAlign: 'center'}}>
+                                        <Typography variant="h6">
+                                            Результаты всех опросов
+                                        </Typography>
+                                    </Paper>
                                     <Table style={{borderTopWidth: 1, borderStyle: 'solid', maxWidth: 1100}}>
                                         <TableHead>
                                             <TableRow style={{borderTopWidth: 3, borderStyle: 'solid'}}>
@@ -106,8 +115,14 @@ const TeacherComponent = (props) => {
                                     </Table>
                                 </TableContainer>
                             </Grid>
+
                             <Grid item>
-                                <TableContainer style={{marginLeft: 40}}>
+                                <TableContainer style={{marginLeft: 40, marginTop: 10}}>
+                                    <Paper elevation={2} style={{maxWidth:500, textAlign: 'center'}}>
+                                        <Typography variant="h6">
+                                            Средние ценки среди всех типов экспертов
+                                        </Typography>
+                                    </Paper>
                                     <Table style={{borderTopWidth: 1, borderStyle: 'solid', maxWidth: 1100}}>
                                         <TableHead>
                                             <TableRow style={{borderTopWidth: 3, borderStyle: 'solid'}}>
@@ -202,7 +217,8 @@ const TeacherComponent = (props) => {
                             </Grid>
                         </Grid>
                     </div>
-                </>)}
+                </>
+            )}
 
 
         </>)
