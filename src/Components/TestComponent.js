@@ -47,7 +47,7 @@ export default class TestComponent extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8081/api/test/', {
+        fetch('http://192.168.11.40:8081/api/test/', {
             headers: new Headers({
                 Authorization: "Bearer " + localStorage.getItem('token')
             })
@@ -108,7 +108,7 @@ export default class TestComponent extends Component {
         //     return
         // }
         {
-            fetch('http://localhost:8081/api/test/sendStat', {
+            fetch('http://192.168.11.40:8081/api/test/sendStat', {
                 method: 'POST',
                 headers: new Headers({
                     Authorization: "Bearer " + localStorage.getItem('token')
@@ -134,7 +134,7 @@ export default class TestComponent extends Component {
                     // console.log(result.rowId)
                     this.formRequest()
                     console.log(this.state.reqData)
-                    fetch("http://localhost:8081/api/test/sendResults", {
+                    fetch("http://192.168.11.40:8081/api/test/sendResults", {
                         method: 'POST',
                         headers: new Headers({
                             Authorization: "Bearer " + localStorage.getItem('token')

@@ -40,7 +40,7 @@ export default class AuthComponent extends Component {
                 <Navigate to="/sel" replace></Navigate>
             )
         } else {
-            fetch("http://localhost:8081/auth/getall")
+            fetch("http://192.168.11.40:8081/auth/getall")
                 .then((result) => (result.json()))
                 .then((data) => {
                         this.setState({
@@ -86,7 +86,7 @@ export default class AuthComponent extends Component {
             body: JSON.stringify({'username': this.state.login, 'password': this.state.password})
         }
         let token = null
-        fetch("http://localhost:8081/auth/sign-in", requestOptions)
+        fetch("http://192.168.11.40:8081/auth/sign-in", requestOptions)
             .then((data) => data.json())
             .then((result) => {
                 console.log(result.token)

@@ -1,6 +1,7 @@
 import {Button, TextField} from "@mui/material";
 import React, {useState} from "react";
 import AppBarComponent from "../HeaderComponent";
+import {Link} from "react-router-dom";
 
 
 const RegisterUserComponent = (props) => {
@@ -9,7 +10,6 @@ const RegisterUserComponent = (props) => {
     const click = () => {
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-type': 'Application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             body: JSON.stringify(
                 {
                     fullname: name,
@@ -19,9 +19,9 @@ const RegisterUserComponent = (props) => {
                     password: '123'
                 })
         }
-        fetch("http://localhost:8081/auth/sign-up", requestOptions)
+        fetch("http://192.168.11.40:8081/auth/sign-up", requestOptions)
             .then((data) => data.json())
-            .then((result)=> console.log(result))
+            .then((result) => console.log(result))
     }
     return (
         <>
@@ -57,7 +57,12 @@ const RegisterUserComponent = (props) => {
                         </div>
                         <div>
                             <Button onClick={click} variant="outlined"
-                                    style={{width: 250, marginTop: 20}}>Создать пользователя</Button>
+                                    style={{width: 250, marginTop: 20}}>
+                                <Link to="/users">
+                                    Создать пользователя
+                                </Link>
+
+                            </Button>
                         </div>
                     </div>
                 </div>

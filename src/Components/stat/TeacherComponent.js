@@ -252,7 +252,7 @@ function calculate(item) {
 }
 
 async function fetchData(id) {
-    const response = await fetch('http://localhost:8081/api/stat/getIndividual', {
+    const response = await fetch('http://192.168.11.40:8081/api/stat/getIndividual', {
         method: 'POST',
         headers: new Headers({
             Authorization: "Bearer " + localStorage.getItem('token')

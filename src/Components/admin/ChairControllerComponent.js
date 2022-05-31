@@ -12,6 +12,7 @@ const NewUserComponent = (props) => {
     useEffect(() => {
         fetchData().then((data) => setChair(data))
     }, [])
+
     if (localStorage.getItem('token') === 'null') {
         return (<Navigate to='/' replace/>)
     }
@@ -59,8 +60,10 @@ const NewUserComponent = (props) => {
                                                                                     <div>
                                                                                         <Grid item xs="8">
                                                                                             <Button variant="outlined"
-                                                                                                    onClick={remove(item.id)}>
+                                                                                                    onClick={(event) => remove(item.id)}>
+                                                                                                <Link to="/transfer">
                                                                                                     Удалить пользователя
+                                                                                                </Link>
                                                                                             </Button>
                                                                                         </Grid>
                                                                                     </div>
@@ -102,19 +105,19 @@ function handleClick(event, id) {
 }
 async function remove(id){
     console.log(id)
-    fetch('http://localhost:8081/api/stat/remove', {
+    fetch('http://192.168.11.40:8081/api/stat/remove', {
         method: 'POST',
         headers: new Headers({
             Authorization: "Bearer " + localStorage.getItem('token')
         }),
-        body: {id: id}
+        body: JSON.stringify({id: id})
     }).then(r => r.json())
         .then((resp)=> console.log(resp))
 }
 
 async function fetchData() {
     let users = []
-    await fetch("http://localhost:8081/api/user/teachers", {
+    await fetch("http://192.168.11.40:8081/api/user/teachers", {
         headers: new Headers({
             Authorization: "Bearer " + localStorage.getItem('token')
         }),

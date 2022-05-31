@@ -15,7 +15,7 @@ import {
 import {Link, Navigate} from 'react-router-dom'
 
 async function fetchData() {
-    const response = await fetch('http://localhost:8081/api/stat/getStat', {
+    const response = await fetch('http://192.168.11.40:8081/api/stat/getStat', {
         method: 'POST',
         headers: new Headers({
             Authorization: "Bearer " + localStorage.getItem('token')
@@ -28,12 +28,10 @@ async function fetchData() {
 
 const StatComponent = (props) => {
     const [ar, seAr] = useState([])
-    const [bl, setBl] = useState([])
     useEffect(() => {
         fetchData()
             .then((data) => {
                 seAr(data)
-                setBl(data[0].blocks)
             })
     }, [])
     if (localStorage.getItem('token') === 'null'){
@@ -45,10 +43,8 @@ const StatComponent = (props) => {
                 <HeaderComponent>
                 </HeaderComponent>
             </div>
-            {ar.length === 0 &&(
-                <div>Loading....</div>
-            )}
-            {ar.length!==0 && (
+            {console.log(ar)}
+            {ar !== null && ar.length !== 0 && (
                 <>
                     <Grid container style={{display: 'flex', justifyContent: 'center'}}>
                         <Grid item style={{alignSelf: 'center'}}>
@@ -70,7 +66,7 @@ const StatComponent = (props) => {
                                         <TableCell style={{border: 1, borderStyle: 'solid'}}>Дата занятия</TableCell>
                                         <TableCell style={{border: 1, borderStyle: 'solid'}}>Тип занятия</TableCell>
                                         <TableCell style={{border: 1, borderStyle: 'solid'}}>Эксперт</TableCell>
-                                        {bl.map(item => (
+                                        {ar[0].blocks.map(item => (
                                             <>
                                                 {item.questions.map(element => (
                                                     <TableCell style={{

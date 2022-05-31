@@ -22,11 +22,7 @@ function defaultHeader() {
             <AppBar position="fixed">
                 <Container fixed>
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" style={{flexGrow: 8}}>Material site</Typography>
-                        <Button href="/sel">home</Button>
+                        <Typography variant="h6" style={{flexGrow: 8}}>Внутренняя система оценки качества образования</Typography>
                     </Toolbar>
                 </Container>
             </AppBar>

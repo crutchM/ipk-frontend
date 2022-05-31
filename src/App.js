@@ -12,6 +12,7 @@ import StatComponent from "./Components/stat/StatComponent";
 import TeacherComponent from "./Components/stat/TeacherComponent";
 import ChairControllerComponent from "./Components/admin/ChairControllerComponent";
 import RegisterUserComponent from "./Components/admin/RegisterUserComponent";
+import TransferComponent from "./common/TransferComponent";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,6 +65,7 @@ function App() {
                     <Route path="/chair" element={<StatComponent/>}/>
                     <Route path="/users" element={<ChairControllerComponent/>}/>
                     <Route path="/reg" element={<RegisterUserComponent/>}/>
+                    <Route path="/transfer" element={<TransferComponent/>}/>
                 </Routes>
             </div>
         </>);
