@@ -103,58 +103,58 @@ export default class TestComponent extends Component {
         // if(this.state.results.length !== this.state.questionsCount){
         //     alert('вы заполнили не все поля')
         // } else
-        // if (this.state.filled !== 12) {
-        //     alert("вы заполнили не все поля")
-        //     return
-        // }
-        {
-            fetch('http://192.168.11.40:8081/api/test/sendStat', {
-                method: 'POST',
-                headers: new Headers({
-                    Authorization: "Bearer " + localStorage.getItem('token')
-                }),
-                body: JSON.stringify(
-                    {
-                        stat: {
-                            userId: localStorage.getItem('teacher'),
-                            postId: 1,
-                            chairId: Number(localStorage.getItem('chair')),
-                            employment: Number(localStorage.getItem('employment')),
-                            expert: Number(localStorage.getItem('expert')),
-
-                        },
-                        anketDate: Math.trunc(new Date() /1000),
-                        date: Number(localStorage.getItem('lessonDate'))
-                        // lessonDate: null,
-                        // anketDate: Date.now()
-                    })
-            })
-                .then((data) => data.json())
-                .then((result) => {
-                    // console.log(result.rowId)
-                    this.formRequest()
-                    console.log(this.state.reqData)
-                    fetch("http://192.168.11.40:8081/api/test/sendResults", {
-                        method: 'POST',
-                        headers: new Headers({
-                            Authorization: "Bearer " + localStorage.getItem('token')
-                        }),
-                        body: JSON.stringify(
-                            {
-                                blocks: this.state.reqData,
-                                test: result.rowId
-                            })
-                    })
-                        .then((respone) => respone.json())
-                        .then((status) => {
-                            console.log(status.status)
-                        })
-
-                })
-            this.setState({
-                sended: true
-            })
+        if (this.state.filled !== 12) {
+            alert("вы заполнили не все поля")
+            return
         }
+
+        fetch('http://192.168.11.40:8081/api/test/sendStat', {
+            method: 'POST',
+            headers: new Headers({
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }),
+            body: JSON.stringify(
+                {
+                    stat: {
+                        userId: localStorage.getItem('teacher'),
+                        postId: 1,
+                        chairId: Number(localStorage.getItem('chair')),
+                        employment: Number(localStorage.getItem('employment')),
+                        expert: Number(localStorage.getItem('expert')),
+
+                    },
+                    anketDate: Math.trunc(new Date() / 1000),
+                    date: Number(localStorage.getItem('lessonDate'))
+                    // lessonDate: null,
+                    // anketDate: Date.now()
+                })
+        })
+            .then((data) => data.json())
+            .then((result) => {
+                // console.log(result.rowId)
+                this.formRequest()
+                console.log(this.state.reqData)
+                fetch("http://192.168.11.40:8081/api/test/sendResults", {
+                    method: 'POST',
+                    headers: new Headers({
+                        Authorization: "Bearer " + localStorage.getItem('token')
+                    }),
+                    body: JSON.stringify(
+                        {
+                            blocks: this.state.reqData,
+                            test: result.rowId
+                        })
+                })
+                    .then((respone) => respone.json())
+                    .then((status) => {
+                        console.log(status.status)
+                    })
+
+            })
+        this.setState({
+            sended: true
+        })
+
 
     }
 
@@ -173,7 +173,7 @@ export default class TestComponent extends Component {
                     <div style={{alignSelf: 'center'}}>
                         <Grid container style={{display: 'flex', justifyContent: 'center'}}>
                             <Grid item style={{alignSelf: 'center', display: 'flex', justifyContent: 'center'}}>
-                                <div style={{display:'block'}}>
+                                <div style={{display: 'block'}}>
                                     <Box style={{alignSelf: 'center'}}>
                                         <Paper elevation={2}>
                                             <Typography>Преподаватель: {localStorage.getItem('teachS')}</Typography>
@@ -181,12 +181,14 @@ export default class TestComponent extends Component {
                                             <Typography>Тип занятия: {localStorage.getItem('empS')}</Typography>
                                         </Paper>
                                     </Box>
-                                    <Box style={{alignSelf: 'center', paddingTop:10}}>
+                                    <Box style={{alignSelf: 'center', paddingTop: 10}}>
                                         <Paper elevation={2} style={{maxWidth: 530}}>
                                             <Typography>5 баллов - Высокий уровень выраженности показателя</Typography>
-                                            <Typography>4 балла - Уровень выраженности показателя выше среднего</Typography>
+                                            <Typography>4 балла - Уровень выраженности показателя выше
+                                                среднего</Typography>
                                             <Typography>3 балла - Уровень выраженности показателя средний</Typography>
-                                            <Typography>2 балла - Уровень выраженности показателя ниже среднего</Typography>
+                                            <Typography>2 балла - Уровень выраженности показателя ниже
+                                                среднего</Typography>
                                             <Typography>1 балл - Низкий уровень выраженности показателя</Typography>
                                         </Paper>
                                     </Box>
@@ -217,7 +219,10 @@ export default class TestComponent extends Component {
                                                             {item.questions.map(ques => (
                                                                 <>
                                                                     <TableRow
-                                                                        style={{borderTopWidth: 2, borderStyle: 'solid'}}>
+                                                                        style={{
+                                                                            borderTopWidth: 2,
+                                                                            borderStyle: 'solid'
+                                                                        }}>
                                                                         <TableCell>{ques.number}</TableCell>
                                                                         <TableCell>{ques.text}</TableCell>
                                                                         <TableCell>
@@ -256,7 +261,8 @@ export default class TestComponent extends Component {
                                             </>
                                         ))}
                                         <Grid item xs={8} textAlign='center'>
-                                            <Button variant="contained" onClick={this.submitAnket}>Отправить форму</Button>
+                                            <Button variant="contained" onClick={this.submitAnket}>Отправить
+                                                форму</Button>
                                         </Grid>
 
                                     </Grid>

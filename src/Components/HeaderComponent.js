@@ -23,6 +23,9 @@ function defaultHeader() {
                 <Container fixed>
                     <Toolbar>
                         <Typography variant="h6" style={{flexGrow: 8}}>Внутренняя система оценки качества образования</Typography>
+                        <ButtonGroup align="right" variant="contained" aria-label="outlined primary button group">
+                            <Button  variant="text" style={{margin: 2}}><Link to="/sel" style={{ textDecoration: 'none', color:'white'}}>Главная</Link></Button>
+                        </ButtonGroup>
                     </Toolbar>
                 </Container>
             </AppBar>

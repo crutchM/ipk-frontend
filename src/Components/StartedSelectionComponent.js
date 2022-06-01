@@ -30,7 +30,7 @@ export default class StartedSelectionComponent extends Component {
     componentDidMount() {
         fetch('http://192.168.11.40:8081/api/user/', {
             headers: new Headers({
-                Authorization: "Bearer " + localStorage.getItem('token')
+                Authorization: "Bearer " + localStorage.getItem('token'), 'Access-Control-Allow-Origin': 'http://localhost:3000'
             })
         })
             .then((result) => result.json())
@@ -71,8 +71,7 @@ export default class StartedSelectionComponent extends Component {
         fetch("http://192.168.11.40:8081/api/user/teachers", {
             headers: new Headers({
                 Authorization: "Bearer " + localStorage.getItem('token')
-            }),
-            credentials: "include"
+            })
         })
             .then((data) => data.json())
             .then((result) => {
@@ -89,8 +88,7 @@ export default class StartedSelectionComponent extends Component {
         fetch("http://192.168.11.40:8081/api/user/experts", {
             headers: new Headers({
                 Authorization: "Bearer " + localStorage.getItem('token')
-            }),
-            credentials: "include"
+            })
         })
             .then((data) => data.json())
             .then((result) => {
@@ -101,8 +99,7 @@ export default class StartedSelectionComponent extends Component {
         fetch("http://192.168.11.40:8081/api/user/employments", {
             headers: new Headers({
                 Authorization: "Bearer " + localStorage.getItem('token')
-            }),
-            credentials: "include"
+            })
         })
             .then((data) => data.json())
             .then((result) => {

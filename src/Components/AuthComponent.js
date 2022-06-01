@@ -82,7 +82,7 @@ export default class AuthComponent extends Component {
         console.log(JSON.stringify({'login': this.state.login, 'password': this.state.password}))
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-type': 'Application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            headers: {'Content-type': 'Application/json'},
             body: JSON.stringify({'username': this.state.login, 'password': this.state.password})
         }
         let token = null

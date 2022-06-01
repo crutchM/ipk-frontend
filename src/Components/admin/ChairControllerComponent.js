@@ -9,6 +9,13 @@ const NewUserComponent = (props) => {
     const setter = (id) => {
 
     }
+    const rem = (id) =>{
+        for (let i= 0; i<chair.length; i++){
+            if (chair[i].id === id){
+                setChair(chair.splice(i, 1))
+            }
+        }
+    }
     useEffect(() => {
         fetchData().then((data) => setChair(data))
     }, [])
@@ -25,7 +32,7 @@ const NewUserComponent = (props) => {
                         <div style={{display: 'block'}}>
                             <div>
                                 {chair.length === 0 && (
-                                    <Typography style={{marginLeft: 70}} variant="h6">Преподаватели с этой кафедры
+                                    <Typography variant="h6">Преподаватели с этой кафедры
                                         отсутствуют в базе</Typography>
                                 )}
                             </div>
@@ -60,7 +67,10 @@ const NewUserComponent = (props) => {
                                                                                     <div>
                                                                                         <Grid item xs="8">
                                                                                             <Button variant="outlined"
-                                                                                                    onClick={(event) => remove(item.id)}>
+                                                                                                    onClick={(event) =>{
+                                                                                                        rem(item.id)
+                                                                                                        remove(item.id)}
+                                                                                            }>
                                                                                                 <Link to="/transfer">
                                                                                                     Удалить пользователя
                                                                                                 </Link>
@@ -119,9 +129,8 @@ async function fetchData() {
     let users = []
     await fetch("http://192.168.11.40:8081/api/user/teachers", {
         headers: new Headers({
-            Authorization: "Bearer " + localStorage.getItem('token')
-        }),
-        credentials: "include"
+            Authorization: "Bearer " + localStorage.getItem('token'), 'Access-Control-Allow-Origin': 'http://localhost:3000'
+        })
     })
         .then((data) => data.json())
         .then((result) => {
